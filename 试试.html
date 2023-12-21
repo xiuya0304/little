@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>亲爱的欣如，你好</title> <!-- Updated page title -->
+
+    <style>
+        body {
+            background-image: url('path/to/kirby-background.jpg'); /* Replace with the path to your Kirby image */
+            background-size: cover;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            height: 100vh;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        #content {
+            flex: 1;
+            max-width: 60%;
+            text-align: left;
+        }
+
+        #sidebar {
+            flex: 1;
+            max-width: 30%;
+            background-color: #ff99cc; /* Light pink background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            color: #ff66b2; /* Dark pink text */
+            margin-bottom: 20px;
+        }
+
+        .glowing-text {
+            text-shadow: 0 0 10px #ff66b2, 0 0 20px #ff66b2, 0 0 30px #ff66b2;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin: 10px 0;
+            padding: 10px;
+        }
+
+        input[type="submit"] {
+            background-color: #ff66b2;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #cc0066;
+        }
+
+        /* Style for the calendar-like display in the sidebar */
+        #record-calendar {
+            text-align: left;
+        }
+
+        #record-calendar div {
+            margin-bottom: 10px;
+        }
+
+        #record-calendar input {
+            width: 80%;
+            padding: 5px;
+        }
+
+        #record-calendar button {
+            background-color: #ff66b2;
+            color: #ffffff;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #record-calendar button:hover {
+            background-color: #cc0066;
+        }
+
+        .record-warning {
+            color: #cc0066; /* Darker pink color for the warning */
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="content">
+
+        <h1 class="glowing-text">亲爱的欣如，你好</h1> <!-- Updated greeting -->
+
+        <h2>记录你的一天</h2> <!-- Updated heading -->
+
+        <form action="#" id="record-form">
+            <label for="mood">今天的心情：</label><br> <!-- Updated labels to Chinese -->
+            <textarea id="mood" name="mood" placeholder="今天你的心情如何？"></textarea><br>
+
+            <label for="outfit">今天的穿搭：</label><br>
+            <textarea id="outfit" name="outfit" placeholder="描述一下你今天的穿搭。"></textarea><br>
+
+            <label for="activities">今天做了什么：</label><br>
+            <textarea id="activities" name="activities" placeholder="列出你今天做的活动。"></textarea><br>
+
+            <input type="submit" value="保存记录">
+            <p class="record-warning" id="record-warning"></p>
+        </form>
+
+    </div>
+
+    <div id="sidebar">
+
+        <h2>记录列表</h2> <!-- Updated heading -->
+
+        <div id="record-calendar">
+            <!-- Entries will be dynamically added here -->
+        </div>
+
+    </div>
+
+    <script>
+        document.getElementById('record-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // Get date and entry values
+            var date = new Date().toLocaleDateString();
+            var mood = document.getElementById('mood').value;
+            var outfit = document.getElementById('outfit').value;
+            var activities = document.getElementById('activities').value;
+
+            // Check if entry for the current date already exists
+            var existingEntry = document.querySelector(`#record-calendar div[data-date="${date}"]`);
+
+            if (existingEntry) {
+                // Show warning if entry already exists
+                document.getElementById('record-warning').innerText = "你已经记录过今天了，刚才的记录是真实的。";
+            } else {
+                // Create a new entry
+                var entryDisplay = document.createElement('div');
+                entryDisplay.setAttribute('data-date', date);
+                entryDisplay.innerHTML = `${date}:<br>心情：${mood}<br>穿搭：${outfit}<br>活动：${activities}`;
+                document.getElementById('record-calendar').appendChild(entryDisplay);
+
+                // Clear input fields and warning
+                document.getElementById('mood').value = '';
+                document.getElementById('outfit').value = '';
+                document.getElementById('activities').value = '';
+                document.getElementById('record-warning').innerText = '';
+            }
+        });
+    </script>
+
+</body>
+
+</html>
